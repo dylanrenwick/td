@@ -2,7 +2,7 @@ import { IUICanvasState } from './UICanvas'
 import { IUINode } from './UINode'
 import { UIRenderer } from './UIRenderer'
 
-export abstract class UIBase implements IUINode {
+export class UIBase implements IUINode {
 	protected _children: IUINode[] = []
 
 	public set children(children: IUINode[]) { this._children = children }

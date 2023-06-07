@@ -1,19 +1,19 @@
-import { IArchetype } from '../../Archetype'
+import { Entity } from '../../Entity'
 import { Renderer } from '../../Renderer'
 import { IState } from '../../State'
+import { UIBase } from './UIBase'
 import { IUINode } from './UINode'
-import {UIRenderer} from './UIRenderer'
-import { UIRoot } from './UIRoot'
+import { UIRenderer } from './UIRenderer'
 
 export interface IUICanvasState {
 	root: IUINode
 }
 
-export function buildArchetype(): IArchetype {
+export function buildArchetype(): Entity {
 	return {
 		state: {
 			canvas: {
-				root: new UIRoot()
+				root: new UIBase()
 			} as IUICanvasState
 		},
 		components: [
