@@ -7,8 +7,8 @@ import { Vector2 } from './canvite/Vector'
 import { buildArchetype as buildTilemap } from './canvite/Entities/Tilemap'
 
 export function buildScene(app: App): void {
-	app.addEntity(new Entity()
-		.withArchetype(
+	app.addEntity(Entity.build()
+		.withPrefab(
 			buildTilemap({
 				mapWidth: 16,
 				mapHeight: 9,
@@ -17,7 +17,7 @@ export function buildScene(app: App): void {
 		)
 	)
 	/*
-	app.addEntity(new Entity()
+	app.addEntity(Entity.build()
 		.withState({
 			'pos': new Vector2(50, 50),
 			'size': new Vector2(50, 50),
