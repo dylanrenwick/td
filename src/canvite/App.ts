@@ -1,4 +1,4 @@
-import { Entity } from './Entity'
+import { Entity, EntityBuilder } from './Entity'
 import { Renderer } from './Renderer'
 
 export class App {
@@ -27,7 +27,8 @@ export class App {
 		this.renderer.background()
 
 		for (const entity of this.entities)
-			entity.update(this.renderer)
+			for (const component of entity.components)
+				component(entity.state, this.renderer)
 	}
 
 	public start(): void {
@@ -40,7 +41,10 @@ export class App {
 		clearInterval(this.intervalId)
 	}
 
-	public addEntity(entity: Entity): void {
+	public addEntity(entity: Entity | EntityBuilder): void {
+		if (entity instanceof EntityBuilder)
+			entity = entity.build()
+
 		this.entities.push(entity)
 	}
 }

@@ -1,4 +1,3 @@
-import {IArchetype} from './Archetype'
 import { Renderer } from './Renderer'
 import { IState } from './State'
 
@@ -10,32 +9,42 @@ export class Entity {
 	public state: IState = {}
 	public components: Component[] = []
 
-	public update(g: Renderer): void {
-		for (const component of this.components) {
-			component(this.state, g)
-		}
+	public static build(): EntityBuilder {
+		return new EntityBuilder(new Entity())
+	}
+}
+
+export class EntityBuilder {
+	private entity: Entity
+
+	public constructor(entity: Entity) {
+		this.entity = entity
 	}
 
-	public withState(state: IState): Entity {
+	public withState(state: IState): EntityBuilder {
 		for (const key in state) {
-			this.state[key] = state[key]
+			this.entity.state[key] = state[key]
 		}
 
 		return this
 	}
 
-	public withComponent(component: Component): Entity {
-		this.components.push(component)
+	public withComponent(component: Component): EntityBuilder {
+		this.entity.components.push(component)
 		return this
 	}
-	public withComponents(components: Component[]): Entity {
-		this.components = this.components.concat(components)
+	public withComponents(components: Component[]): EntityBuilder {
+		this.entity.components = this.entity.components.concat(components)
 		return this
 	}
 
-	public withArchetype(archetype: IArchetype): Entity {
+	public withPrefab(prefab: Entity): EntityBuilder {
 		return this
-			.withState(archetype.state)
-			.withComponents(archetype.components)
+			.withState(prefab.state)
+			.withComponents(prefab.components)
+	}
+
+	public build(): Entity {
+		return this.entity
 	}
 }
